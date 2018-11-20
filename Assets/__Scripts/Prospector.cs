@@ -10,7 +10,7 @@ public class Prospector : MonoBehaviour {
 	static public Prospector 	S;
 
 	[Header("Set in Inspector")]
-	public TextAsset deckXML;
+	public TextAsset			deckXML;
 	public TextAsset layoutXML;
 	public float xOffset = 3;
 	public float yOffset = -2.5f;
@@ -18,7 +18,7 @@ public class Prospector : MonoBehaviour {
 
 
 	[Header("Set Dynamically")]
-	public Deck deck;
+	public Deck					deck;
 	public Layout layout;
 	public List<CardProspector> drawPile;
 	public Transform layoutAnchor;
@@ -35,11 +35,11 @@ public class Prospector : MonoBehaviour {
 		deck.InitDeck (deckXML.text);
 		Deck.Shuffle(ref deck.cards);
 		
-	/* 	Card c;
-		for(int cNum = 0; cNum<deck.cards.Count; cNum++){
+		Card c;
+		for(int cNum=0; cNum<deck.cards.Count; cNum++){
 			c = deck.cards[cNum];
-			c.transform.localPosition = new Vector3( (cNum%13)*3, cNum/13*4, 0);
-		} */
+			c.transform.localPosition = new Vector3((cNum%13)*3, cNum/13*4, 0);
+		}
 		
 		layout = GetComponent<Layout>();
 		layout.ReadLayout(layoutXML.text);
@@ -83,7 +83,7 @@ public class Prospector : MonoBehaviour {
 			tableau.Add(cp);
 		}
 		
-		foreach (CardProspector tCP in tableau){
+		foreach(CardProspector tCP in tableau){
 			foreach(int hid in tCP.slotDef.hiddenBy){
 				cp = FindCardByLayoutID(hid);
 				tCP.hiddenBy.Add(cp);
@@ -92,7 +92,6 @@ public class Prospector : MonoBehaviour {
 		
 		MoveToTarget(Draw());
 		UpdateDrawPile();
-		
 	}
 	
 	CardProspector FindCardByLayoutID(int layoutID){
@@ -139,11 +138,11 @@ public class Prospector : MonoBehaviour {
 	
 	void UpdateDrawPile(){
 		CardProspector cd;
-		for(int i = 0; i < drawPile.Count; i++){
+		for(int i=0; i<drawPile.Count; i++){
 			cd = drawPile[i];
 			cd.transform.parent = layoutAnchor;
 			Vector2 dpStagger = layout.drawPile.stagger;
-			cd.transform.localPosition = new Vector3(layout.multiplier.x * (layout.drawPile.x + i*dpStagger.x), layout.multiplier.y * (layout.drawPile.y + i*dpStagger.y), -layout.drawPile.layerID+0.1f*i);
+			cd.transform.localPosition = new Vector3(layout.multiplier.x * (layout.drawPile.x + i*dpStagger.x), layout.multiplier.y * (layout.discardPile.y + i*dpStagger.y), -layout.drawPile.layerID+0.1f*i);
 			cd.faceUp = false;
 			cd.state = eCardState.drawpile;
 			cd.SetSortingLayerName(layout.drawPile.layerName);
@@ -185,6 +184,9 @@ public class Prospector : MonoBehaviour {
 		if(drawPile.Count>0){
 			return;
 		}
+		if(drawPile.Count==0){
+			GameOver(true);
+		}
 		foreach(CardProspector cd in tableau){
 			if(AdjacentRank(cd, target)){
 				return;
@@ -195,11 +197,11 @@ public class Prospector : MonoBehaviour {
 	
 	void GameOver(bool won){
 		if(won){
-			print("Game Over, You won! :)");
+			print("Game Over. You won! :)");
 		}else{
 			print("Game Over. You Lost. :(");
 		}
-		SceneManager.LoadScene("__Prospector)_Scene_0");
+		SceneManager.LoadScene("__Prospector_Scene_0");
 	}
 	
 	public bool AdjacentRank(CardProspector c0, CardProspector c1){

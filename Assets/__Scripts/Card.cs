@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Card : MonoBehaviour {
-	
-	[Header("Set Dynamically")]
 
 	public string    suit;
 	public int       rank;
@@ -15,10 +13,12 @@ public class Card : MonoBehaviour {
 	public List<GameObject> pipGOs = new List<GameObject>();
 	
 	public GameObject back;  // back of card;
-	public CardDefinition def;  // from DeckXML.xml	
+	public CardDefinition def;  // from DeckXML.xml		
 	public SpriteRenderer[] spriteRenderers;
-	
-	void Start(){
+
+
+	// Use this for initialization
+	void Start () {
 		SetSortOrder(0);
 	}
 	
@@ -53,9 +53,8 @@ public class Card : MonoBehaviour {
 			}
 		}
 	}
-
-
-	public bool faceUp {
+	
+		public bool faceUp {
 		get {
 			return (!back.activeSelf);
 		}
@@ -69,7 +68,11 @@ public class Card : MonoBehaviour {
 		print(name);
 	}
 
-
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 } // class Card
 
 [System.Serializable]
