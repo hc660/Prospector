@@ -178,7 +178,7 @@ public class Prospector : MonoBehaviour {
 			cd = drawPile[i];
 			cd.transform.parent = layoutAnchor;
 			Vector2 dpStagger = layout.drawPile.stagger;
-			cd.transform.localPosition = new Vector3(layout.multiplier.x * (layout.drawPile.x + i*dpStagger.x), layout.multiplier.y * (layout.discardPile.y + i*dpStagger.y), -layout.drawPile.layerID+0.1f*i);
+			cd.transform.localPosition = new Vector3(layout.multiplier.x * (layout.drawPile.x + i*dpStagger.x), layout.multiplier.y * (layout.drawPile.y + i*dpStagger.y), -layout.drawPile.layerID+0.1f*i);
 			cd.faceUp = false;
 			cd.state = eCardState.drawpile;
 			cd.SetSortingLayerName(layout.drawPile.layerName);
